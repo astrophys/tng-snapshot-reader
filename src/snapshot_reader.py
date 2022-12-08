@@ -10,7 +10,7 @@ import illustris_python as il
 import matplotlib.pyplot as plt
 import matplotlib
 import pickle
-matplotlib.use('tkagg')
+#matplotlib.use('tkagg')
 
 
 def main():
