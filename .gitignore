@@ -2,3 +2,4 @@
 .*.swp
 halo_pos_snap_*_thresh_*.txt
 *.off
+*.xyzm

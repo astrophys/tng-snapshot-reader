@@ -1,6 +1,8 @@
 # Author : Ali Snedden
 # Date   : 11/01/22
 # License: MIT
+# Example to run : 
+#   python -m pdb src/snapshot_reader.py ~/Lab/phillips/data/TNG-50/Illustris-3/output/ 135 100 75000
 """Module that reads in Illustrius-3 TNG-50 simulations
 """
 import sys
