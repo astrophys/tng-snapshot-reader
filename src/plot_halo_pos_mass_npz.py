@@ -45,7 +45,8 @@ def main():
     fig = plt.figure()
     gs = fig.add_gridspec(1,1)
     ax = fig.add_subplot(gs[0,0])
-    ax.scatter(subDF['x'], subDF['y'], s=np.log10(np.max(subDF['mass'])+2)/1000)
+    ax.scatter(subDF['x'], subDF['y'], s=np.log10(np.max(subDF['mass'])+2)/10000)
+    ax.set_title("{:<.2f}kpc/h slab in z-axis".format(zthresh))
 
     print('a comment')
     plt.show()
