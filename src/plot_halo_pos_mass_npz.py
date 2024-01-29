@@ -21,8 +21,8 @@ def main():
     parser = argparse.ArgumentParser(description="")
     parser.add_argument('--data', metavar='halo_pos_mass.npz', type=str,
                         help='Input npy file')
-    #parser.add_argument('--output', metavar='output', type=str,
-    #                    help='')
+    parser.add_argument('--output', metavar='output', type=str,
+                        help='')
     args = parser.parse_args()
     npz = np.load(args.data, allow_pickle=True)
     dataV = npz['data']         # This is an ugly np.vector of tuples, let's rework this
@@ -38,7 +38,7 @@ def main():
     
     df.columns = header
     # Only plot from 0 -> zthresh
-    zthresh = 10000     # kpc/h
+    zthresh = 1000     # kpc/h
     subDF = df[df['z'] < zthresh]
     #slab = 
 
@@ -48,14 +48,15 @@ def main():
     ax.scatter(subDF['x'], subDF['y'], s=np.log10(np.max(subDF['mass'])+2)/10000)
     ax.set_title("{:<.2f}kpc/h slab in z-axis".format(zthresh))
 
-    print('a comment')
+    print('Subset = {}'.format(subDF.shape))
     plt.show()
-    #fout = open(args.output, "w+")
-    #nx = data.shape[0]
-    #ny = data.shape[1]
-    #nz = data.shape[2]
-    #fout.write("# vtk DataFile Version 1.0. next line is dim[]... Dx=change"
-    #           "column, Dy=each row, Dz=every dim[0] rows\n")
+
+    fout = open("{}.NDfield_ascii".format(args.output), "w+")
+    # Header
+    fout.write("ANDFIELD COORDS\n")
+    fout.write("3 {}\n".format(subDF.shape[0]))
+    for index, row in subDF.iterrows():
+        fout.write("{} {} {}\n".format(row['x'], row['y'], row['z']))
     #fout.write("%i %i %i\n"%(nx,ny,nz))
     #for k in range(0, nz):
     #    for j in range(0, ny):
@@ -63,7 +64,7 @@ def main():
     #            fout.write("{:<.4e} ".format(data[i,j,k]))
     #        fout.write("\n")
     #print("Finished outputting : %s"%(args.output))
-    #fout.close()
+    fout.close()
     sys.exit(0)
 
 if __name__ == "__main__":
