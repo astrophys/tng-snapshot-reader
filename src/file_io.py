@@ -35,13 +35,13 @@ def read_matlab_int(path : str) -> np.ndarray :
         # size
         elif lidx == 1 :
             line = line.strip()
-            sizeL = line.split(' ')
+            sizeL = line.split()
             sizeL = [int(x) for x in sizeL]
             dataM = np.zeros(sizeL, dtype=np.float64)
         # Actual data    
         else :
             line = line.strip()
-            lineL= line.split(' ')
+            lineL= line.split()
             lineL= [float(x) for x in lineL]
             
             # loop over x
@@ -53,6 +53,7 @@ def read_matlab_int(path : str) -> np.ndarray :
             else :
                 j += 1
         lidx += 1
+    # Logic Bug  here : 2/1/24
     if i != sizeL[0] -1 or j != sizeL[1] or k != sizeL[2]:
         raise ValueError("ERROR!! ({}, {}, {}) != ({}, {}, {})".format(i, j, k, sizeL[0],
                                                                        sizeL[1], sizeL[2]))
