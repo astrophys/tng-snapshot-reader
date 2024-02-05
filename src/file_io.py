@@ -24,6 +24,7 @@ def read_matlab_int(path : str) -> np.ndarray :
     i = 0
     j = 0
     k = 0
+    n = 0                               # number of values read
     for line in fin:
         # First two lines are metadata or comments 
         if line[0] == '#' and lidx >= 2:
@@ -46,7 +47,9 @@ def read_matlab_int(path : str) -> np.ndarray :
             
             # loop over x
             for i in range(sizeL[0]):
+                #print(i,j,k)
                 dataM[i,j,k] = float(lineL[i])
+                n += 1
             if j == sizeL[1] - 1:
                 j = 0
                 k += 1
@@ -54,9 +57,10 @@ def read_matlab_int(path : str) -> np.ndarray :
                 j += 1
         lidx += 1
     # Logic Bug  here : 2/1/24
-    if i != sizeL[0] -1 or j != sizeL[1] or k != sizeL[2]:
-        raise ValueError("ERROR!! ({}, {}, {}) != ({}, {}, {})".format(i, j, k, sizeL[0],
-                                                                       sizeL[1], sizeL[2]))
+    if n != sizeL[0] * sizeL[1] * sizeL[2]:
+        raise ValueError("ERROR!! n ({}) != size[0] * size[1] * size[2] ({} x {} x "
+                         "{} = {})".format(n, size[0], size[1], size[2],
+                         sizeL[1] * sizeL[2] * sizeL[3]))
     fin.close()
     return dataM
 

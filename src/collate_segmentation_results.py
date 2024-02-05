@@ -31,11 +31,15 @@ def main():
     #parser.add_argument('--output', metavar='output', type=str,
     #                    help='')
     args = parser.parse_args()
+    print("Reading : {} ".format(args.data))
     npz = np.load(args.data, allow_pickle=True)
     dataV = npz['data']         # This is an ugly np.vector of tuples, let's rework this
     #
+    print("Reading : {} ".format(args.vessels))
     vesselM = read_matlab_int(args.vessels)
+    print("Reading : {} ".format(args.clusters))
     clusterM = read_matlab_int(args.clusters)
+    print("Reading : {} ".format(args.voids))
     voidM = read_matlab_int(args.voids)
     
     # Put the dataV into a data frame that I can more easily handle
