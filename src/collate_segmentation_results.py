@@ -8,7 +8,13 @@ import argparse
 import numpy as np
 import pandas as pd
 from file_io import read_matlab_int
+from plot import plot_segmentation_results
 import matplotlib.pyplot as plt
+# https://matplotlib.org/stable/users/explain/figure/backends.html
+import matplotlib
+matplotlib.use('TKAgg')
+
+
 
 def main():
     """
@@ -41,6 +47,7 @@ def main():
     clusterM = read_matlab_int(args.clusters)
     print("Reading : {} ".format(args.voids))
     voidM = read_matlab_int(args.voids)
+    plot_segmentation_results(dataV, [vesselM, clusterM, voidM], z=0)
     
     # Put the dataV into a data frame that I can more easily handle
     dataL = []
@@ -67,13 +74,17 @@ def main():
     print('Subset = {}'.format(subDF.shape))
     plt.show()
 
-    fout = open("{}.NDfield_ascii".format(args.output), "w+")
-    # Header
-    fout.write("ANDFIELD COORDS\n")
-    fout.write("3 {}\n".format(subDF.shape[0]))
-    for index, row in subDF.iterrows():
-        fout.write("{} {} {}\n".format(row['x'], row['y'], row['z']))
+    ### 12-feb-2024
+    # Not sure where / why I put this in here
+    # This is the format used by Disperse
+    ##fout = open("{}.NDfield_ascii".format(args.output), "w+")
+    ### Header
+    ##fout.write("ANDFIELD COORDS\n")
+    ##fout.write("3 {}\n".format(subDF.shape[0]))
+    ##for index, row in subDF.iterrows():
+    ##    fout.write("{} {} {}\n".format(row['x'], row['y'], row['z']))
     #fout.write("%i %i %i\n"%(nx,ny,nz))
+
     #for k in range(0, nz):
     #    for j in range(0, ny):
     #        for i in range(0, nx):

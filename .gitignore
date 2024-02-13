@@ -8,3 +8,4 @@ halo_pos_snap_*_thresh_*.txt
 submit.sh.o*
 snap_099
 disperse_test
+__pycache__
