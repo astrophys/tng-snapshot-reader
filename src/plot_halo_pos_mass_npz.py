@@ -46,7 +46,7 @@ def main():
     haloDF.columns = header
     ### Work on density
 
-
+    print("WARNING!! Ugly hardcoding going on below")
     fig = plt.figure()
     # Only plot halos
     if density is None:

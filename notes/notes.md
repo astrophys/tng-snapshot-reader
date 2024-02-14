@@ -66,4 +66,6 @@ header-includes:
        np.sum(density[0:gasthresh,:,:], axis=0)
         #. CONCLUSION : Yes my axis are flipped. 
             * See halo_vs_gas_npsum_axis0.jpg
+            * From the meeting today, in fact that was done intentionally, the axis
+              are ordered by z,x,y
 

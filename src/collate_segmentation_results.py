@@ -26,8 +26,10 @@ def main():
     Raises:
     """
     parser = argparse.ArgumentParser(description="")
-    parser.add_argument('--data', metavar='halo_pos_mass.npz', type=str,
-                        help='Input npy file')
+    parser.add_argument('--halos', metavar='halo_pos_mass.npz', type=str,
+                        help='Halo npz file')
+    parser.add_argument('--density', metavar='density.npy', type=str,
+                        help='Gas Density npy file')
     parser.add_argument('--vessels', metavar='output', type=str,
                         help='')
     parser.add_argument('--clusters', metavar='output', type=str,
@@ -38,8 +40,9 @@ def main():
     #                    help='')
     args = parser.parse_args()
     print("Reading : {} ".format(args.data))
-    npz = np.load(args.data, allow_pickle=True)
-    dataV = npz['data']         # This is an ugly np.vector of tuples, let's rework this
+    halos = np.load(args.data, allow_pickle=True)
+    density = np.load(args.density, allow_pickle=True)
+    haloV = halos['data']         # This is an ugly np.vector of tuples, let's rework this
     #
     print("Reading : {} ".format(args.vessels))
     vesselM = read_matlab_int(args.vessels)
@@ -47,17 +50,17 @@ def main():
     clusterM = read_matlab_int(args.clusters)
     print("Reading : {} ".format(args.voids))
     voidM = read_matlab_int(args.voids)
-    plot_segmentation_results(dataV, [vesselM, clusterM, voidM], z=0)
+    plot_segmentation_results(haloV, desnity, [vesselM, clusterM, voidM], z=0)
     
-    # Put the dataV into a data frame that I can more easily handle
-    dataL = []
-    for i in range(dataV.shape[0]):
-        #lst = [dataV[i][0], dataV[i][1], dataV[i][2], dataV[i][3], dataV[i][4]]
-        dataL.append(list(dataV[i]))
-    df = pd.DataFrame(dataL)
+    # Put the haloV into a data frame that I can more easily handle
+    haloL = []
+    for i in range(haloV.shape[0]):
+        #lst = [haloV[i][0], haloV[i][1], haloV[i][2], haloV[i][3], haloV[i][4]]
+        haloL.append(list(haloV[i]))
+    df = pd.DataFrame(haloL)
     # Strip out spaces, make lower case
-    header = [string.split(' ')[0].lower() for string in npz['metadata'].item()['headers']]
-    units = npz['metadata'].item()['units']
+    header = [string.split(' ')[0].lower() for string in halos['metadata'].item()['headers']]
+    units = halos['metadata'].item()['units']
     
     df.columns = header
     # Only plot from 0 -> zthresh

@@ -11,11 +11,13 @@ import matplotlib.pyplot as plt
 import matplotlib
 matplotlib.use('TKAgg')      # For interactive plotting
 
-def plot_segmentation_results(haloV : np.ndarray, matrixL : list, z : int) -> None:
+def plot_segmentation_results(haloV : np.ndarray, densM : np.ndarray, matrixL : list,
+                              z : int) -> None:
     """Takes halos (loaded from npz) and matrix and plots a slice of it
 
     Args:
         haloV   : np.array, halos created by Guobao 
+        densM   : np.array, density halo created by Guobao
         matrixL : list, list of numpy matrixes
         z       : in, slice in z to plot
 
