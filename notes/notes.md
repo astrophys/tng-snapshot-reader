@@ -69,3 +69,9 @@ header-includes:
             * From the meeting today, in fact that was done intentionally, the axis
               are ordered by z,x,y
 
+
+20-feb-2024 :
+======================================
+1. Trying to adjust my code st G and M can see what I'm referring to
+
+

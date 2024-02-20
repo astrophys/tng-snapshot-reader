@@ -4,3 +4,5 @@
     a) Use to validate : fieldconv ~/Lab/phillips/software/disperse/data/simu_32_id.gad -outName simu_32_id.gad.ascii -to NDfield_ascii
     #) Run example in http://www2.iap.fr/users/sousbie/web/html/indexf6f1.html?post/Example-2
 2. Maybe make histogram
+3. ENSURE density dims and segmentation matrices dims are SAME
+4. Flag / differnetiate what is cluster,vessel and void
