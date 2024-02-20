@@ -39,9 +39,10 @@ def main():
     #parser.add_argument('--output', metavar='output', type=str,
     #                    help='')
     args = parser.parse_args()
-    print("Reading : {} ".format(args.data))
-    halos = np.load(args.data, allow_pickle=True)
+    print("Reading : {} ".format(args.halos))
+    halos = np.load(args.halos, allow_pickle=True)
     density = np.load(args.density, allow_pickle=True)
+    print("Reading : {} ".format(args.density))
     haloV = halos['data']         # This is an ugly np.vector of tuples, let's rework this
     #
     print("Reading : {} ".format(args.vessels))
@@ -50,7 +51,7 @@ def main():
     clusterM = read_matlab_int(args.clusters)
     print("Reading : {} ".format(args.voids))
     voidM = read_matlab_int(args.voids)
-    plot_segmentation_results(haloV, desnity, [vesselM, clusterM, voidM], z=0)
+    plot_segmentation_results(haloV, density, [vesselM, clusterM, voidM], z=0)
     
     # Put the haloV into a data frame that I can more easily handle
     haloL = []

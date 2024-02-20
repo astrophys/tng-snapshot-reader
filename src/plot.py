@@ -45,7 +45,8 @@ def plot_segmentation_results(haloV : np.ndarray, densM : np.ndarray, matrixL : 
                                  i, matrix.shape))
     # Let's bin and only select relevant halos
     minz = np.min(haloV['z'])
-    dz = (np.max(haloV['z']) - np.min(haloV['z']))/mshape[0]
+    maxz = np.max(haloV['z'])
+    dz = (maxz - minz)/mshape[0]
     lowerz = minz + z*dz
     upperz = minz + (z+1)*dz
     tmpV = haloV[haloV['z'] > lowerz]
@@ -53,53 +54,62 @@ def plot_segmentation_results(haloV : np.ndarray, densM : np.ndarray, matrixL : 
 
     fig = plt.figure()
     # Be flexible to plot multiple data sets
-    if len(matrixL) == 1:
-        nrow = 1
-        ncol = 2
-    else:
-        nrow = 2
-        ncol = 2
+    #if len(matrixL) == 1:
+    #    nrow = 1
+    #    ncol = 2
+    #else:
+    nrow = 3
+    ncol = 2
     gs = fig.add_gridspec(nrow,ncol)
     # halos
     haloax = fig.add_subplot(gs[0,0])
-    haloax.scatter(hsliceV['x'], hsliceV['y'], s=np.log10(hsliceV['mass']+2))
+    haloax.scatter(hsliceV['x'], hsliceV['y'], s=np.log10(hsliceV['mass']+2)/1000)
+    xmin,xmax = haloax.get_xlim()
+    ymin,ymax = haloax.get_ylim()
+    haloax.set_aspect(abs(xmax-xmin)/abs(ymax-ymin))
+
+    # density
+    ax = fig.add_subplot(gs[0,1])
+    #density2D = np.sum(densM[:,:,:], axis=0)
+    density2D = densM[:,:,z]
+    im = ax.imshow(np.log10(density2D+1).T)
+    #im = ax.imshow(np.log10(density2D+1))
+    fig.colorbar(im, ax=ax, anchor=(0, 0.3), shrink=0.7)
+    ax.set_xlim(0,density2D.shape[0])
+    ax.set_ylim(0,density2D.shape[1])
+    #ax.set_title("0-{} gas slab in z-axis".format(gasthresh))
+    #fig.suptitle('z=[0-{}kpc/h]'.format(halothresh))
 
     # Vessels
     matrix = matrixL[0]
-    ax = fig.add_subplot(gs[0,1])
-    ax.imshow(np.log10(matrix[:,:,z]))        # This is doesn't look good.
+    ax = fig.add_subplot(gs[1,0])
+    #ax.imshow(np.log10(matrix[:,:,z]+1))        # This is doesn't look good.
+    im = ax.imshow(matrix[:,:,z].T)        # This is doesn't look good.
+    fig.colorbar(im, ax=ax, anchor=(0, 0.3), shrink=0.7)
+    ax.set_xlim(0,matrix.shape[0])
+    ax.set_ylim(0,matrix.shape[1])
 
-    # Matrix plot
-    if len(matrixL) > 1:
-        # Clusters
-        matrix = matrixL[1]
-        ax = fig.add_subplot(gs[1,0])
-        ax.imshow(np.log10(matrix[:,:,z]))        # This is doesn't look good.
-        # Voids
-        matrix = matrixL[2]
-        ax = fig.add_subplot(gs[1,1])
-        ax.imshow(np.log10(matrix[:,:,z]))        # This is doesn't look good.
+    # Clusters
+    matrix = matrixL[1]
+    ax = fig.add_subplot(gs[1,1])
+    #ax.imshow(np.log10(matrix[:,:,z]+1))        # This is doesn't look good.
+    #ax.imshow(np.log10(matrix[:,:,z]+1).T)        # This is doesn't look good.
+    im = ax.imshow(matrix[:,:,z].T)        # This is doesn't look good.
+    fig.colorbar(im, ax=ax, anchor=(0, 0.3), shrink=0.7)
+    ax.set_xlim(0,matrix.shape[0])
+    ax.set_ylim(0,matrix.shape[1])
+
+    # Voids
+    matrix = matrixL[2]
+    ax = fig.add_subplot(gs[2,0])
+    #ax.imshow(np.log10(matrix[:,:,z]+1))        # This is doesn't look good.
+    #ax.imshow(np.log10(matrix[:,:,z]+1).T)        # This is doesn't look good.
+    im = ax.imshow(matrix[:,:,z].T)        # This is doesn't look good.
+    fig.colorbar(im, ax=ax, anchor=(0, 0.3), shrink=0.7)
+    ax.set_xlim(0,matrix.shape[0])
+    ax.set_ylim(0,matrix.shape[1])
         
-    #ax.scatter(subDF['x'], subDF['y'], s=np.log10(np.max(subDF['mass'])+2)/10000)
-    #ax.set_title("{:<.2f}kpc/h slab in z-axis".format(zthresh))
-
-    #print('Subset = {}'.format(subDF.shape))
     plt.show()
-
-    #fout = open("{}.NDfield_ascii".format(args.output), "w+")
-    # Header
-    #fout.write("ANDFIELD COORDS\n")
-    #fout.write("3 {}\n".format(subDF.shape[0]))
-    #for index, row in subDF.iterrows():
-    #    fout.write("{} {} {}\n".format(row['x'], row['y'], row['z']))
-    #fout.write("%i %i %i\n"%(nx,ny,nz))
-    #for k in range(0, nz):
-    #    for j in range(0, ny):
-    #        for i in range(0, nx):
-    #            fout.write("{:<.4e} ".format(data[i,j,k]))
-    #        fout.write("\n")
-    #print("Finished outputting : %s"%(args.output))
-    #fout.close()
     sys.exit(0)
 
 

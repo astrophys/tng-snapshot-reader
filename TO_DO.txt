@@ -1,4 +1,5 @@
 0. Figure out how Guoboa sets the max/min for the halos.npz
+0. Wait until I have 200^3 volume before continuing work.
 1. Validate that the output to NDfield_ascii is correct
     a) Use to validate : fieldconv ~/Lab/phillips/software/disperse/data/simu_32_id.gad -outName simu_32_id.gad.ascii -to NDfield_ascii
     #) Run example in http://www2.iap.fr/users/sousbie/web/html/indexf6f1.html?post/Example-2
