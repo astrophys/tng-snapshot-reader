@@ -73,5 +73,10 @@ header-includes:
 20-feb-2024 :
 ======================================
 1. Trying to adjust my code st G and M can see what I'm referring to
+#. Simplified my collate code s.t. they can use it to visualize the issue
+    a) Just gas and halos :
+        #. python -m pdb src/collate_segmentation_results.py --halos snap_099/data/halo_pos_mass.npz  --density snap_099/data/density_uniform_grid_TNG100_z0_gN200.npy
+    #) halos, density, segmentation :
+        #. python -m pdb src/collate_segmentation_results.py --halos snap_099/data/halo_pos_mass.npz  --density snap_099/data/density_uniform_grid_TNG100_z0_gN200.npy --vessels snap_099/output/200_xyz/vessels/vesselness.txt --clusters snap_099/output/200_xyz/clusters/vesselness.txt  --voids snap_099/output/200_xyz/voids/vesselness.txt
 
 

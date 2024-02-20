@@ -55,10 +55,10 @@ def main():
         print("Reading : {} ".format(args.voids))
         voidM = read_matlab_int(args.voids)
     if args.vessels is None and args.clusters is None and args.voids is None:
+        #plot_segmentation_results(haloV, density, z=0, trans=True)
         plot_segmentation_results(haloV, density, z=0, trans=False)
     else :
-        plot_segmentation_results(haloV, density, [vesselM, clusterM, voidM], z=0,
-                              trans=False)
+        plot_segmentation_results(haloV, density, [vesselM, clusterM, voidM], z=0)
 
     ###### BIG RED FLAG #######
     ### STOP HERE 
